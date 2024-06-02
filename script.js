@@ -50,25 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 operator = null;
                 waitingForSecondValue = false;
             }
-        } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(action)) {
-            switch (action) {
-                case "0": display.textContent = 0; return;
-                case "1": display.textContent = 1; return;
-                case "2": display.textContent = 2; return;
-                case "3": display.textContent = 3; return;
-                case "4": display.textContent = 4; return;
-                case "5": display.textContent = 5; return;
-                case "6": display.textContent = 6; return;
-                case "7": display.textContent = 7; return;
-                case "8": display.textContent = 8; return;
-                case "9": display.textContent = 9; return;
-            };
-            // if (firstValue) {
-            //     display.textContent = displayedNum.charAt(0) === '0' ? displayedNum.slice(1) : '-' + displayedNum;
-            //     firstValue = null;
-            //     operator = null;
-            //     waitingForSecondValue = false;
-            // }
+        } else if (!isNaN(action)) {
+            setNumbers(keyContent);
         }
     });
 
@@ -79,5 +62,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (operator === 'subtract') return first - second;
         if (operator === 'multiply') return first * second;
         if (operator === 'divide') return first / second;
+    }
+
+    function setNumbers(numberPressed) {
+        const displayedNum = display.textContent;
+        if (waitingForSecondValue) {
+            display.textContent = numberPressed;
+            waitingForSecondValue = false;
+        } else {
+            display.textContent = displayedNum === '0' ? numberPressed : displayedNum + numberPressed;
+        }
     }
 });
